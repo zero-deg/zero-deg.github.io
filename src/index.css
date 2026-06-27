@@ -21,6 +21,12 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+@media (hover: hover) {
+  *, *::before, *::after {
+    cursor: none !important;
+  }
+}
+
 /* Hide scrollbar for Chrome, Safari and Opera */
 ::-webkit-scrollbar {
   display: none;

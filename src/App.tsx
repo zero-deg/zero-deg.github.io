@@ -19,6 +19,7 @@ import AnimatedGradient from '@/components/ui/animated-gradient';
 import { GetStartedButton } from '@/components/ui/GetStartedButton';
 import { LiquidMetalButton } from "./components/ui/liquid-metal-button";
 import Strands from './components/Strands';
+import { CustomCursor } from '@/components/ui/CustomCursor';
 
 export default function App() {
   const [name, setName] = useState('ZERO°');
@@ -26,6 +27,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-[#f5f5f7] text-[#111] overflow-hidden">
+      <CustomCursor />
       <Navbar name={name} setName={setName} onOpenWaitlist={() => setIsWaitlistOpen(true)} />
       <WaitlistModal isOpen={isWaitlistOpen} onClose={() => setIsWaitlistOpen(false)} />
       
