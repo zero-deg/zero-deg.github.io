@@ -125,7 +125,7 @@ function Navbar({ name, setName, onOpenWaitlist }: { name: string, setName: (nam
         </div>
 
         <div className="absolute left-1/2 -translate-x-1/2">
-          <img src="/logo.png" alt="ZERO°" className="h-[44px] w-auto object-contain py-1.5" />
+          <img src="/logo.png" alt="ZERO°" className="h-[72px] w-auto object-contain py-1" />
         </div>
 
         <div className="flex items-center gap-4 h-full flex-1 justify-end">
