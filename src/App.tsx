@@ -155,31 +155,26 @@ function WaitlistModal({ isOpen, onClose }: { isOpen: boolean, onClose: () => vo
   const handleWaitlistSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const waitlistData = {
-      type: 'waitlist',
       name: formName,
       contact: formContact,
-      timestamp: new Date().toISOString()
     };
     
     try {
-      const scriptUrl = import.meta.env.VITE_GOOGLE_SHEET_URL;
-      if (scriptUrl) {
-        await fetch(scriptUrl, {
-          method: 'POST',
-          mode: 'no-cors',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(waitlistData),
-        });
-      }
+      await fetch('https://formspree.io/f/mjgqwlev', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify(waitlistData),
+      });
     } catch (error) {
       console.error('Submission failed:', error);
     }
     
     // Save to localStorage as a reliable backup
     const existingWaitlist = JSON.parse(localStorage.getItem('waitlist_responses') || '[]');
-    existingWaitlist.push(waitlistData);
+    existingWaitlist.push({ ...waitlistData, type: 'waitlist', timestamp: new Date().toISOString() });
     localStorage.setItem('waitlist_responses', JSON.stringify(existingWaitlist));
     
     setIsSubmitted(true);
@@ -233,6 +228,8 @@ function WaitlistModal({ isOpen, onClose }: { isOpen: boolean, onClose: () => vo
                 initial="hidden"
                 animate="visible"
                 onSubmit={handleWaitlistSubmit}
+                action="https://formspree.io/f/mjgqwlev"
+                method="POST"
                 className="flex flex-col gap-3"
               >
                 {/* Name Input */}
@@ -240,6 +237,7 @@ function WaitlistModal({ isOpen, onClose }: { isOpen: boolean, onClose: () => vo
                   <div className="relative w-full">
                     <input 
                       type="text" 
+                      name="name"
                       value={formName}
                       onChange={(e) => setFormName(e.target.value)}
                       placeholder="Full name or first name"
@@ -253,6 +251,7 @@ function WaitlistModal({ isOpen, onClose }: { isOpen: boolean, onClose: () => vo
                   <div className="relative w-full">
                     <textarea 
                       rows={2}
+                      name="contact"
                       value={formContact}
                       onChange={(e) => setFormContact(e.target.value)}
                       placeholder="Email, WhatsApp/Phone or Social links (separated by commas)"
